@@ -1,290 +1,201 @@
-
-<!-- INSERIR RANKING APONTAMENTO PÁGINA WYD CRIAR FRAME-->
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>CRISTOVIVE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<title>CRISTOVIVE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/jpeg" href="img/1.jpeg">
 
-  <style>
+<style>
 
-    :root {
-      --bg-dark: #020b12;
-      --bg-header: #041926;
-      --bg-card: #061f2f;
-      --cyan: #00cfff;
-      --cyan-soft: #6fe9ff;
-      --text: #e6f6ff;
-      --text-muted: #9fc7d9;
-    }
+:root {
+  --bg-dark: #020b12;
+  --bg-header: #041926;
+  --bg-card: #061f2f;
+  --cyan: #00cfff;
+  --cyan-soft: #6fe9ff;
+  --text: #e6f6ff;
+  --text-muted: #9fc7d9;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    body {
-      background: radial-gradient(circle at top, #06283d, var(--bg-dark));
-      color: var(--text);
-      min-height: 100vh;
-    }
+body {
+  background: radial-gradient(circle at top, #06283d, var(--bg-dark));
+  color: var(--text);
+  min-height: 100vh;
+}
 
-    /* HEADER */
-    header {
-      background: linear-gradient(180deg, #062c44, var(--bg-header));
-      border-bottom: 2px solid var(--cyan);
-      padding: 16px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+/* HEADER */
+header {
+  background: linear-gradient(180deg, #062c44, var(--bg-header));
+  border-bottom: 2px solid var(--cyan);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-      color: var(--cyan);
-      letter-spacing: 1px;
-    }
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
 
-    nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      margin-left: 24px;
-      font-weight: 500;
-      transition: 0.3s;
-    }
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-left: 24px;
+  font-weight: 500;
+  transition: 0.3s;
+}
 
-    nav a:hover {
-      color: var(--cyan);
-      text-shadow: 0 0 6px var(--cyan);
-    }
+nav a:hover {
+  color: var(--cyan);
+  text-shadow: 0 0 6px var(--cyan);
+}
 
-    /* SEARCH */
-    .search-bar {
-      margin: 40px auto;
-      max-width: 720px;
-      display: flex;
-      background: var(--bg-card);
-      border: 1px solid #0a3b55;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0, 207, 255, 0.15);
-    }
+/* SEARCH */
+.search-bar {
+  margin: 40px auto;
+  max-width: 720px;
+  display: flex;
+  background: var(--bg-card);
+  border: 1px solid #0a3b55;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 207, 255, 0.15);
+}
 
-    .search-bar input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      padding: 14px 16px;
-      color: var(--text);
-      font-size: 16px;
-      outline: none;
-    }
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 14px 16px;
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+}
 
-    .search-bar button {
-      background: linear-gradient(180deg, var(--cyan), #008fb3);
-      border: none;
-      padding: 0 22px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #012b3b;
-      transition: 0.3s;
-    }
+.search-bar button {
+  background: linear-gradient(180deg, var(--cyan), #008fb3);
+  border: none;
+  padding: 0 22px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #012b3b;
+  transition: 0.3s;
+}
 
-    .search-bar button:hover {
-      filter: brightness(1.15);
-      box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
-    }
+.search-bar button:hover {
+  filter: brightness(1.15);
+}
 
-    /* MAIN */
-    main {
-      padding: 0 32px 60px;
-      max-width: 1200px;
-      margin: auto;
-    }
+/* MAIN */
+main {
+  padding: 0 32px 60px;
+  max-width: 1200px;
+  margin: auto;
+}
 
-    .section-title {
-      margin: 40px 0 20px;
-      font-size: 24px;
-      color: var(--cyan-soft);
-      border-left: 4px solid var(--cyan);
-      padding-left: 12px;
-    }
+.section-title {
+  margin: 40px 0 20px;
+  font-size: 24px;
+  color: var(--cyan-soft);
+  border-left: 4px solid var(--cyan);
+  padding-left: 12px;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
 
-    .card {
-      background: linear-gradient(180deg, #082b41, var(--bg-card));
-      border: 1px solid #0a3b55;
-      border-radius: 12px;
-      padding: 20px;
-      transition: 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
+.card {
+  background: linear-gradient(180deg, #082b41, var(--bg-card));
+  border: 1px solid #0a3b55;
+  border-radius: 12px;
+  padding: 20px;
+  transition: 0.3s;
+}
 
-    .card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent, rgba(0,207,255,0.15), transparent);
-      opacity: 0;
-      transition: 0.4s;
-    }
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0, 207, 255, 0.25);
+}
 
-    .card:hover::before {
-      opacity: 1;
-    }
+/* MOLDURA DOURADA */
+.frame-container {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
 
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 30px rgba(0, 207, 255, 0.25);
-    }
+.gold-frame {
+  position: relative;
+  padding: 14px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #8a6a1f, #f5d76e, #b08d2c);
+  box-shadow:
+    0 0 25px rgba(255, 215, 100, 0.6),
+    0 0 60px rgba(255, 215, 100, 0.35);
+  animation: shimmer 4s linear infinite;
+}
 
-    .card h3 {
-      color: var(--cyan);
-      margin-bottom: 10px;
-    }
+@keyframes shimmer {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.25); }
+  100% { filter: brightness(1); }
+}
 
-    .card p {
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
+/* CARROSSEL */
+.carousel {
+  position: relative;
+  width: 720px;
+  max-width: 100%;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 12px;
+}
 
-    /* FOOTER */
-    footer {
-      background: #03131d;
-      border-top: 1px solid #0a3b55;
-      text-align: center;
-      padding: 18px;
-      color: #6ea9c3;
-      font-size: 14px;
-    }
+.carousel img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
 
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        gap: 12px;
-      }
-    }
-  
-    /* MOLDURA DOURADA */
-    .frame-container {
-      display: flex;
-      justify-content: center;
-      margin: 50px 0;
-    }
+.carousel img.active {
+  opacity: 1;
+  position: relative;
+}
 
-    .gold-frame {
-      position: relative;
-      padding: 14px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #8a6a1f, #f5d76e, #b08d2c);
-      box-shadow:
-        0 0 25px rgba(255, 215, 100, 0.6),
-        0 0 60px rgba(255, 215, 100, 0.35);
-      animation: shimmer 4s linear infinite;
-    }
+/* FOOTER */
+footer {
+  background: #03131d;
+  border-top: 1px solid #0a3b55;
+  text-align: center;
+  padding: 18px;
+  color: #6ea9c3;
+  font-size: 14px;
+}
 
-    .gold-frame img {
-      display: block;
-      max-width: 100%;
-      width: 720px;
-      border-radius: 12px;
-      border: 2px solid rgba(255,255,255,0.15);
-      background: #000;
-    }
-
-    @keyframes shimmer {
-      0% { filter: brightness(1); }
-      50% { filter: brightness(1.25); }
-      100% { filter: brightness(1); }
-    }
-
-    #ranking {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .ranking-table th {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            text-transform: uppercase;
-            font-size: 14px;
-        }
-
-        .ranking-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-        }
-
-        /* Efeito Striped (Zebrado) */
-        .ranking-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .ranking-table tr:hover {
-            background-color: #f1f4f9;
-            transition: 0.3s;
-        }
-
-        /* Destaques para o Top 3 */
-        .rank-1 { background-color: rgba(241, 196, 15, 0.1) !important; font-weight: bold; }
-        .rank-2 { background-color: rgba(189, 195, 199, 0.1) !important; }
-        .rank-3 { background-color: rgba(205, 127, 50, 0.1) !important; }
-
-        .medal {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 24px;
-            color: white;
-            font-size: 12px;
-            margin-right: 10px;
-        }
-
-        .medal-1 { background: var(--gold); border: 2px solid #d4af37; color: #000; }
-        .medal-2 { background: var(--silver); border: 2px solid #a9a9a9; color: #000; }
-        .medal-3 { background: var(--bronze); border: 2px solid #8b4513; }
-
-        .guild-img {
-            vertical-align: middle;
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-        }
-
-        .loading { padding: 20px; text-align: center; color: #666; }
-
-  </style>
+</style>
 </head>
+
 <body>
 
 <header>
-  <div class="logo">GUILD WYD CRISTOVIVE</div>
+  <div class="logo">GUILD WYD CRISTOVIVE<sup>®</sup></div>
   <nav>
     <a href="#">Dashboard</a>
     <a href="#">Membros</a>
@@ -294,17 +205,20 @@
 </header>
 
 <div class="search-bar">
-  <input type="text" id="search" placeholder="Pesquisar membros, builds, eventos..." />
-  <button onclick="pesquisar()">PESQUISAR</button>
+  <input type="text" placeholder="Pesquisar membros, builds, eventos..." />
+  <button>PESQUISAR</button>
 </div>
 
 <main>
   <h2 class="section-title">Painel da Guilda</h2>
 
-  <!-- IMAGEM CENTRAL COM MOLDURA -->
+  <!-- CARROSSEL NA MOLDURA -->
   <div class="frame-container">
     <div class="gold-frame">
-      <img src="img/guild.JPG" alt="Imagem da Guilda WYD" />
+      <div class="carousel">
+        <img src="img/guild.JPG" class="active">
+        <img src="img/4.jpeg">
+      </div>
     </div>
   </div>
 
@@ -316,20 +230,38 @@
 
     <div class="card">
       <h3>Eventos & Wars</h3>
-      <p>Organize guerras, horários de hunt, boss e estratégias.</p>
+      <p>Organize guerras e estratégias.</p>
     </div>
 
     <div class="card">
       <h3>Builds & Dicas</h3>
-      <p>Compartilhe builds, atributos e setups otimizados do WYD Global.</p>
+      <p>Compartilhe builds e setups otimizados.</p>
     </div>
 
     <div class="card">
       <h3>Ranking Interno</h3>
-      <p>Acompanhe desempenho, presença e contribuição dos membros.</p>
+      <p>Acompanhe desempenho e contribuição.</p>
     </div>
   </div>
 </main>
+
+<footer>
+  © 2026 Guilda WYD - CRISTOVIVE ® • Desenvolvido para a comunidade
+</footer>
+
+<script>
+const slides = document.querySelectorAll(".carousel img");
+let current = 0;
+
+setInterval(() => {
+  slides[current].classList.remove("active");
+  current = (current + 1) % slides.length;
+  slides[current].classList.add("active");
+}, 4000);
+</script>
+
+</body>
+</html>
 <!-- RANKING WYD BRASIL -->
 <section class="section-title">🏆 Ranking Brasil – WYD Global</section>
 
@@ -359,7 +291,7 @@
         onmouseout="this.style.transform='scale(1)'"
       >
       <p style="margin-top:14px; color:var(--cyan-soft); font-size:18px;">
-        Clique na bandeira 🇧🇷 para liberar o ranking
+        Clique na bandeira CRISTOVIVE para liberar o ranking
       </p>
     </div>
 
@@ -446,7 +378,7 @@
  
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
-                container.innerHTML = '<div class="loading">O Lula roubou o ranking.</div>';
+                container.innerHTML = '<div class="loading">Aqui as Lendas são forjadas ! ® -KZERO.</div>';
             }
         }
  
