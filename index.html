@@ -1,0 +1,486 @@
+
+<!-- INSERIR RANKING APONTAMENTO PÁGINA WYD CRIAR FRAME-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>CRISTOVIVE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+
+    :root {
+      --bg-dark: #020b12;
+      --bg-header: #041926;
+      --bg-card: #061f2f;
+      --cyan: #00cfff;
+      --cyan-soft: #6fe9ff;
+      --text: #e6f6ff;
+      --text-muted: #9fc7d9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #06283d, var(--bg-dark));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(180deg, #062c44, var(--bg-header));
+      border-bottom: 2px solid var(--cyan);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--cyan);
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 24px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 6px var(--cyan);
+    }
+
+    /* SEARCH */
+    .search-bar {
+      margin: 40px auto;
+      max-width: 720px;
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid #0a3b55;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 207, 255, 0.15);
+    }
+
+    .search-bar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 14px 16px;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-bar button {
+      background: linear-gradient(180deg, var(--cyan), #008fb3);
+      border: none;
+      padding: 0 22px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #012b3b;
+      transition: 0.3s;
+    }
+
+    .search-bar button:hover {
+      filter: brightness(1.15);
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    /* MAIN */
+    main {
+      padding: 0 32px 60px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      margin: 40px 0 20px;
+      font-size: 24px;
+      color: var(--cyan-soft);
+      border-left: 4px solid var(--cyan);
+      padding-left: 12px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #082b41, var(--bg-card));
+      border: 1px solid #0a3b55;
+      border-radius: 12px;
+      padding: 20px;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(0,207,255,0.15), transparent);
+      opacity: 0;
+      transition: 0.4s;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0, 207, 255, 0.25);
+    }
+
+    .card h3 {
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #03131d;
+      border-top: 1px solid #0a3b55;
+      text-align: center;
+      padding: 18px;
+      color: #6ea9c3;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  
+    /* MOLDURA DOURADA */
+    .frame-container {
+      display: flex;
+      justify-content: center;
+      margin: 50px 0;
+    }
+
+    .gold-frame {
+      position: relative;
+      padding: 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #8a6a1f, #f5d76e, #b08d2c);
+      box-shadow:
+        0 0 25px rgba(255, 215, 100, 0.6),
+        0 0 60px rgba(255, 215, 100, 0.35);
+      animation: shimmer 4s linear infinite;
+    }
+
+    .gold-frame img {
+      display: block;
+      max-width: 100%;
+      width: 720px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: #000;
+    }
+
+    @keyframes shimmer {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(1.25); }
+      100% { filter: brightness(1); }
+    }
+
+    #ranking {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ranking-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .ranking-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+
+        /* Efeito Striped (Zebrado) */
+        .ranking-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .ranking-table tr:hover {
+            background-color: #f1f4f9;
+            transition: 0.3s;
+        }
+
+        /* Destaques para o Top 3 */
+        .rank-1 { background-color: rgba(241, 196, 15, 0.1) !important; font-weight: bold; }
+        .rank-2 { background-color: rgba(189, 195, 199, 0.1) !important; }
+        .rank-3 { background-color: rgba(205, 127, 50, 0.1) !important; }
+
+        .medal {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .medal-1 { background: var(--gold); border: 2px solid #d4af37; color: #000; }
+        .medal-2 { background: var(--silver); border: 2px solid #a9a9a9; color: #000; }
+        .medal-3 { background: var(--bronze); border: 2px solid #8b4513; }
+
+        .guild-img {
+            vertical-align: middle;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .loading { padding: 20px; text-align: center; color: #666; }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">GUILD WYD CRISTOVIVE</div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Membros</a>
+    <a href="#">Eventos</a>
+    <a href="#">Regras</a>
+  </nav>
+</header>
+
+<div class="search-bar">
+  <input type="text" id="search" placeholder="Pesquisar membros, builds, eventos..." />
+  <button onclick="pesquisar()">PESQUISAR</button>
+</div>
+
+<main>
+  <h2 class="section-title">Painel da Guilda</h2>
+
+  <!-- IMAGEM CENTRAL COM MOLDURA -->
+  <div class="frame-container">
+    <div class="gold-frame">
+      <img src="img/guild.JPG" alt="Imagem da Guilda WYD" />
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Membros Ativos</h3>
+      <p>Gerencie jogadores, classes, níveis e status dentro da guilda.</p>
+    </div>
+
+    <div class="card">
+      <h3>Eventos & Wars</h3>
+      <p>Organize guerras, horários de hunt, boss e estratégias.</p>
+    </div>
+
+    <div class="card">
+      <h3>Builds & Dicas</h3>
+      <p>Compartilhe builds, atributos e setups otimizados do WYD Global.</p>
+    </div>
+
+    <div class="card">
+      <h3>Ranking Interno</h3>
+      <p>Acompanhe desempenho, presença e contribuição dos membros.</p>
+    </div>
+  </div>
+</main>
+<!-- RANKING WYD BRASIL -->
+<section class="section-title">🏆 Ranking Brasil – WYD Global</section>
+
+
+
+<div class="frame-container">
+  <div class="gold-frame" style="width:100%; max-width:1100px; position:relative;">
+
+    <!-- BLOQUEIO -->
+    <div id="lockRanking" style="
+      position:absolute;
+      inset:0;
+      background:rgba(2,11,18,.88);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:5;
+      border-radius:14px;
+    ">
+      <img
+        src="https://flagcdn.com/w80/br.png"
+        alt="Brasil"
+        id="btnBrasil"
+        style="cursor:pointer; transition:.2s;"
+        onmouseover="this.style.transform='scale(1.15)'"
+        onmouseout="this.style.transform='scale(1)'"
+      >
+      <p style="margin-top:14px; color:var(--cyan-soft); font-size:18px;">
+        Clique na bandeira 🇧🇷 para liberar o ranking
+      </p>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div id="rankingContent" style="
+      filter:blur(6px);
+      pointer-events:none;
+      transition:.3s;
+    ">
+      <iframe
+        src="https://ranking.raidhut.com/?lang=pt-BR"
+        style="
+          width:100%;
+          height:999px;
+          border:none;
+          border-radius:12px;
+          background:#000;
+        ">
+      </iframe>
+    </div>
+
+  </div>
+</div>
+ 
+    <div id="ranking">
+        <div class="loading">Carregando ranking...</div>
+    </div>
+ 
+    <script>
+        async function carregarRanking() {
+            const container = document.getElementById('ranking');
+            const URL_API = 'https://japao.design/';
+ 
+            try {
+                const response = await fetch(URL_API);
+                const data = await response.json();
+ 
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<div class="loading">Nenhum dado encontrado para esta guilda no momento.</div>';
+                    return;
+                }
+ 
+                let html = `
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Personagem</th>
+                        <th>Level 1</th>
+                        <th>Level 2</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+ 
+                data.forEach((player, index) => {
+                    const posicao = index + 1;
+                    let rowClass = '';
+                    let medalHtml = posicao;
+ 
+                    // Lógica de destaque 1, 2 e 3
+                    if (posicao <= 3) {
+                        rowClass = `rank-${posicao}`;
+                        medalHtml = `<span class="medal medal-${posicao}">${posicao}</span>`;
+                    }
+ 
+                    html += `
+                <tr class="${rowClass}">
+                    <td>${medalHtml}</td>
+                    <td>
+                        <img src="${player.guildImg}" class="guild-img" onerror="this.style.display='none'">
+                        ${player.nome}
+                    </td>
+                    <td>${player.level1}</td>
+                    <td>${player.level2}</td>
+                    <td><strong>${player.levelTotal}</strong></td>
+                </tr>
+            `;
+                });
+ 
+                html += '</tbody></table>';
+                container.innerHTML = html;
+ 
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+                container.innerHTML = '<div class="loading">O Lula roubou o ranking.</div>';
+            }
+        }
+ 
+        // Inicia a função
+        carregarRanking();
+    </script>
+ 
+
+
+<!--document.querySelector("#root > div > div.sc-imWYAI.iFgcCx > div > div.sc-fqkvVR.jNpnnI > div.sc-kAyceB.dnyHkl > div:nth-child(1) > button:nth-child(16)")-->
+<script>
+  document.getElementById("btnBrasil").addEventListener("click", () => {
+    document.getElementById("lockRanking").style.display = "none";
+    document.getElementById("rankingContent").style.filter = "none";
+    document.getElementById("rankingContent").style.pointerEvents = "auto";
+  });
+</script>
+
+<footer>
+  © 2026 Guilda WYD - CRISTOVIVE • Desenvolvido para a comunidade
+</footer>
+
+<script>
+  function pesquisar() {
+    const termo = document.getElementById('search').value.trim();
+
+    if (!termo) {
+      alert('Digite algo para pesquisar.');
+      return;
+    }
+
+    alert('Pesquisa simulada por: ' + termo);
+  }
+</script>
+
+</body>
+</html>
