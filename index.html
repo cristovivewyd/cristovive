@@ -7,7 +7,51 @@
 <link rel="icon" type="image/jpeg" href="img/1.jpeg">
 
 <style>
+.winner-announcement {
+  background: linear-gradient(135deg, #1a1a1a, #2c003e);
+  border: 4px solid gold;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 0 30px gold;
+  animation: glow 2s infinite alternate;
+}
 
+.winner-announcement p {
+  margin: 15px 0;
+  font-size: 22px;
+}
+
+.winner {
+  font-size: 28px;
+  text-transform: uppercase;
+}
+
+.prize {
+  font-size: 28px;
+}
+
+.gold {
+  color: gold;
+  text-shadow: 0 0 10px gold, 0 0 20px orange;
+}
+
+.silver {
+  color: #c0c0c0;
+  text-shadow: 0 0 10px #c0c0c0, 0 0 20px white;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px gold;
+  }
+  to {
+    box-shadow: 0 0 50px orange;
+  }
+}
 :root {
   --bg-dark: #020b12;
   --bg-header: #041926;
@@ -212,15 +256,54 @@ footer {
 <main>
   <h2 class="section-title">Painel da Guilda</h2>
 
-  <!-- CARROSSEL NA MOLDURA -->
-  <div class="frame-container">
-    <div class="gold-frame">
-      <div class="carousel">
-        <img src="img/guild.JPG" class="active">
-        <img src="img/4.jpeg">
-      </div>
+<!-- CARROSSEL NA MOLDURA -->
+<div class="frame-container">
+  <div class="gold-frame">
+    <div class="carousel">
+      <img src="img/1.jpeg" class="active">
+      <img src="img/3.jpeg">
+      <img src="img/4.jpeg">
+      <img src="img/5.jpeg">
+      <img src="img/6.jpeg">
+      <img src="img/7.jpeg">
+      <img src="img/8.jpg">
+      <img src="img/9.jpeg">
+      <img src="img/10.jpeg">
+      <img src="img/10.jpeg">
     </div>
   </div>
+</div>
+
+<div class="winner-announcement">
+  🎉 PARABÉNS AOS VENCEDORES DO SORTEIO! Pós Guerra - Semana 3 Fev-2026 🎉
+  
+  <p>
+    🏆 <span class="winner gold">JhoniN</span> ganhou 
+    <span class="prize gold">2 BI</span>!
+  </p>
+  
+  <p>
+    🥈 <span class="winner silver">Wakanda</span> ganhou 
+    <span class="prize silver">1 BI</span>!
+  </p>
+
+  <p>
+    🥉 <span class="winner bronze">DL lvl 174</span> ficou em 
+    <span class="prize bronze">3º Lugar</span>!
+  </p>
+
+  <div class="sponsors">
+    💎 <strong>Patrocinadores do Sorteio:</strong><br>
+    <span class="sponsor-name">Daniel</span> - 3 BI<br>
+    <span class="sponsor-name joker">ARSEUSS4 </span> - DL 174
+  </div>
+<br>
+  <div class="war-message">
+    ⚔️ Nosso respeito e gratidão a todos que lutaram nesta guerra.  
+    Cada esforço, cada batalha e cada conquista fortalecem a Cristovive.  
+    <strong>Unidos, somos imparáveis!</strong>
+  </div>
+</div>
 
   <div class="cards">
     <div class="card">
