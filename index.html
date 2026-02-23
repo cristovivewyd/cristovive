@@ -7,6 +7,68 @@
 <link rel="icon" type="image/jpeg" href="img/1.jpeg">
 
 <style>
+
+  /* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #061f2f, #0b2f44);
+  border: 3px solid gold;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 40px gold;
+  animation: fadeIn .3s ease-in-out;
+  position: relative;
+}
+
+.modal-content h2 {
+  color: gold;
+  margin-bottom: 15px;
+}
+
+.war-time {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #00cfff;
+}
+
+.modal-image img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(.9); opacity:0; }
+  to { transform: scale(1); opacity:1; }
+}
+
 .winner-announcement {
   background: linear-gradient(135deg, #1a1a1a, #2c003e);
   border: 4px solid gold;
@@ -310,11 +372,10 @@ footer {
       <p>Gerencie jogadores, classes, níveis e status dentro da guilda.</p>
     </div>
 
-    <div class="card">
+    <div class="card" onclick="abrirModalWars()" style="cursor:pointer;">
       <h3>Eventos & Wars</h3>
       <p>Organize guerras e estratégias.</p>
     </div>
-
     <div class="card">
       <h3>Builds & Dicas</h3>
       <p>Compartilhe builds e setups otimizados.</p>
@@ -495,6 +556,49 @@ setInterval(() => {
     alert('Pesquisa simulada por: ' + termo);
   }
 </script>
+<!-- MODAL EVENTOS & WARS -->
+<div id="modalWars" class="modal-overlay">
+  <div class="modal-content">
 
+    <span class="close-btn" onclick="fecharModalWars()">✖</span>
+
+    <h2>🏰 Conquista Cidade Arzam SV2</h2>
+
+    <p class="war-time">
+      ⚔️ Guerra de <strong>20:00 às 20:30</strong>
+    </p>
+    <p class="war-time">
+      ⚔️ OBS: Compareçam no discord <strong>às 19:30</strong>
+    </p>
+    <div class="modal-image">
+      <img src="img/arzan_sv2.JPG" alt="Guerra Arzam">
+    </div>
+
+    <p class="war-message">
+      A Cristovive mostrou sua força e dominou a cidade!  
+      Estratégia, união e determinação marcaram essa vitória.
+    </p>
+
+  </div>
+
+  
+</div>
+<script>
+function abrirModalWars() {
+  document.getElementById("modalWars").style.display = "flex";
+}
+
+function fecharModalWars() {
+  document.getElementById("modalWars").style.display = "none";
+}
+
+// Fechar clicando fora
+window.onclick = function(event) {
+  const modal = document.getElementById("modalWars");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 </body>
 </html>
