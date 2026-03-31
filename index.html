@@ -2193,23 +2193,23 @@
           <span class="conquest-card-icon">🎉</span>
           <div>
             <div class="conquest-card-title">Sorteio Pós-Guerra</div>
-            <div class="conquest-card-subtitle">Semana 3 • Fevereiro 2026</div>
+            <div class="conquest-card-subtitle" id="sorteioDisplayPeriod">Carregando...</div>
           </div>
         </div>
         <div class="winner-row winner-gold">
           <span class="winner-rank">🏆</span>
-          <span class="winner-name">JhoniN</span>
-          <span class="winner-prize">2 BI</span>
+          <span class="winner-name" id="sorteioDisplayTop1Name">...</span>
+          <span class="winner-prize" id="sorteioDisplayTop1Prize">...</span>
         </div>
         <div class="winner-row winner-silver">
           <span class="winner-rank">🥈</span>
-          <span class="winner-name">Wakanda</span>
-          <span class="winner-prize">1 BI</span>
+          <span class="winner-name" id="sorteioDisplayTop2Name">...</span>
+          <span class="winner-prize" id="sorteioDisplayTop2Prize">...</span>
         </div>
         <div class="winner-row winner-bronze">
           <span class="winner-rank">🥉</span>
-          <span class="winner-name">gmlzao</span>
-          <span class="winner-prize">DL 174</span>
+          <span class="winner-name" id="sorteioDisplayTop3Name">...</span>
+          <span class="winner-prize" id="sorteioDisplayTop3Prize">...</span>
         </div>
         <div class="sponsors-box">
           <div class="sponsors-title">💎 Patrocinadores</div>
@@ -2331,6 +2331,7 @@
         <button class="dash-tab leader-only" data-panel="memberlist">👥 Lista Membros</button>
         <button class="dash-tab leader-only" data-panel="warbulletin">⚔️ Boletim Guerra</button>
         <button class="dash-tab leader-only" data-panel="stats">📊 Estatísticas</button>
+        <button class="dash-tab leader-only" data-panel="sorteio">🎁 Sorteio</button>
       </div>
 
       <!-- ANNOUNCEMENTS PANEL -->
@@ -2436,6 +2437,48 @@
           <div id="statsContent">
             <p style="text-align:center;color:var(--text-muted)">Carregando estatísticas...</p>
           </div>
+        </div>
+      </div>
+
+      <!-- SORTEIO PANEL (LEADER) -->
+      <div class="dash-panel" id="panel-sorteio">
+        <div class="panel-card">
+          <h3>🎁 Configurar Sorteio</h3>
+          <div class="form-group">
+            <label>Período / Título</label>
+            <input type="text" id="sorteioInputPeriod" placeholder="Ex: Semana 3 • Fevereiro 2026" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text); margin-bottom: 16px;">
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:12px;">
+            <div>
+              <label>🏆 Ganhador 1</label>
+              <input type="text" id="sorteioInputTop1Name" placeholder="Nome" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text);">
+            </div>
+            <div>
+              <label>Prêmio 1</label>
+              <input type="text" id="sorteioInputTop1Prize" placeholder="Ex: 2 BI" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text);">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:12px;">
+            <div>
+              <label>🥈 Ganhador 2</label>
+              <input type="text" id="sorteioInputTop2Name" placeholder="Nome" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text);">
+            </div>
+            <div>
+              <label>Prêmio 2</label>
+              <input type="text" id="sorteioInputTop2Prize" placeholder="Ex: 1 BI" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text);">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div>
+              <label>🥉 Ganhador 3</label>
+              <input type="text" id="sorteioInputTop3Name" placeholder="Nome" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text);">
+            </div>
+            <div>
+              <label>Prêmio 3</label>
+              <input type="text" id="sorteioInputTop3Prize" placeholder="Ex: DL 174" class="form-select" style="background:rgba(0,0,0,0.3); padding:10px; width:100%; border-radius:6px; border:1px solid var(--border); color:var(--text);">
+            </div>
+          </div>
+          <button class="btn-primary" onclick="saveSorteio()" style="width:100%">💾 Atualizar Sorteio</button>
         </div>
       </div>
     </div>
@@ -2774,6 +2817,7 @@
         loadMemberList();
         initWarBulletin();
         loadWarStats();
+        loadSorteioEditor();
       }
     }
 
@@ -3062,6 +3106,61 @@
       `;
     }
 
+    // --- SORTEIO PÓS-GUERRA ---
+    async function fetchSorteio() {
+      const data = await api('sorteio.php');
+      if (data && !data.error) {
+        setElementsData(data, false);
+      }
+    }
+    
+    function setElementsData(data, isEditor) {
+      if (isEditor) {
+        document.getElementById('sorteioInputPeriod').value = data.period || '';
+        document.getElementById('sorteioInputTop1Name').value = data.top1_name || '';
+        document.getElementById('sorteioInputTop1Prize').value = data.top1_prize || '';
+        document.getElementById('sorteioInputTop2Name').value = data.top2_name || '';
+        document.getElementById('sorteioInputTop2Prize').value = data.top2_prize || '';
+        document.getElementById('sorteioInputTop3Name').value = data.top3_name || '';
+        document.getElementById('sorteioInputTop3Prize').value = data.top3_prize || '';
+      } else {
+        document.getElementById('sorteioDisplayPeriod').textContent = data.period || '';
+        document.getElementById('sorteioDisplayTop1Name').textContent = data.top1_name || '';
+        document.getElementById('sorteioDisplayTop1Prize').textContent = data.top1_prize || '';
+        document.getElementById('sorteioDisplayTop2Name').textContent = data.top2_name || '';
+        document.getElementById('sorteioDisplayTop2Prize').textContent = data.top2_prize || '';
+        document.getElementById('sorteioDisplayTop3Name').textContent = data.top3_name || '';
+        document.getElementById('sorteioDisplayTop3Prize').textContent = data.top3_prize || '';
+      }
+    }
+    
+    async function loadSorteioEditor() {
+      const data = await api('sorteio.php');
+      if (data && !data.error) {
+        setElementsData(data, true);
+      }
+    }
+    
+    async function saveSorteio() {
+      const payload = {
+        period: document.getElementById('sorteioInputPeriod').value,
+        top1_name: document.getElementById('sorteioInputTop1Name').value,
+        top1_prize: document.getElementById('sorteioInputTop1Prize').value,
+        top2_name: document.getElementById('sorteioInputTop2Name').value,
+        top2_prize: document.getElementById('sorteioInputTop2Prize').value,
+        top3_name: document.getElementById('sorteioInputTop3Name').value,
+        top3_prize: document.getElementById('sorteioInputTop3Prize').value,
+      };
+      
+      const res = await api('sorteio.php', 'POST', payload);
+      if (res.success) {
+        showToast('Sorteio atualizado com sucesso!');
+        fetchSorteio();
+      } else {
+        showToast(res.error || 'Falha ao atualizar sorteio', 'error');
+      }
+    }
+
     // --- UTILS ---
     function formatDate(dateStr) {
       if (!dateStr) return '';
@@ -3085,6 +3184,9 @@
       section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       observer.observe(section);
     });
+    
+    // Load sorteio on homepage
+    fetchSorteio();
   </script>
 
 </body>
