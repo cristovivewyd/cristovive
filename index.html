@@ -2204,7 +2204,7 @@
   <section class="section ranking-section" id="ranking">
     <div class="section-header">
       <p class="section-tag">Competição</p>
-      <h2 class="section-title">🏆 Ranking Brasil — WYD Global</h2>
+      <h2 class="section-title">🏆 Ranking de Membros</h2>
       <div class="divider"></div>
     </div>
     <div class="ranking-frame">
@@ -2213,14 +2213,31 @@
         <p>Clique na bandeira para liberar o ranking</p>
       </div>
       <div class="ranking-content" id="rankingContent">
-        <iframe src="https://ranking.raidhut.com/?lang=pt-BR" title="Ranking WYD Brasil"></iframe>
+        <div style="overflow-x:auto;">
+          <table class="ranking-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Level</th>
+                <th>Guerras</th>
+                <th>Pontos</th>
+              </tr>
+            </thead>
+            <tbody id="publicRankingBody">
+              <tr>
+                <td colspan="5" style="text-align:center;color:var(--text-muted)">Carregando ranking...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- MEMBERS CTA -->
   <section class="members-cta-section" id="members">
-    <button class="members-cta-btn" onclick="openLogin()">🛡️ Área de Membros</button>
+    <button class="members-cta-btn" onclick="checkAutoLogin()">🛡️ Área de Membros</button>
   </section>
 
   <!-- LOGIN MODAL -->
@@ -2283,14 +2300,13 @@
                   <th>#</th>
                   <th>Nome</th>
                   <th>Level</th>
-                  <th>Set</th>
                   <th>Guerras</th>
                   <th>Pontos</th>
                 </tr>
               </thead>
               <tbody id="rankingBody">
                 <tr>
-                  <td colspan="6" style="text-align:center;color:var(--text-muted)">Carregando ranking...</td>
+                  <td colspan="5" style="text-align:center;color:var(--text-muted)">Carregando ranking...</td>
                 </tr>
               </tbody>
             </table>
@@ -2561,6 +2577,18 @@
       }
     }
 
+    function checkAutoLogin() {
+      const savedToken = localStorage.getItem('cv_auth_token');
+      const savedRole = localStorage.getItem('cv_auth_role');
+      if (savedToken && savedRole) {
+        authToken = savedToken;
+        currentRole = savedRole;
+        openDashboard(savedRole);
+      } else {
+        openLogin();
+      }
+    }
+
     // --- LOGIN ---
     function openLogin() {
       document.getElementById('loginOverlay').classList.add('open');
@@ -2612,6 +2640,8 @@
         loginAttempts = 0;
         authToken = res.token;
         currentRole = res.role;
+        localStorage.setItem('cv_auth_token', res.token);
+        localStorage.setItem('cv_auth_role', res.role);
         msgEl.textContent = res.message;
         msgEl.className = 'login-msg success';
         setTimeout(() => {
@@ -2674,10 +2704,12 @@
     }
 
     function handleLogout() {
-      api('auth.php', 'DELETE');
+      localStorage.removeItem('cv_auth_token');
+      localStorage.removeItem('cv_auth_role');
+      authToken = null;
+      currentRole = null;
       document.getElementById('dashboardOverlay').classList.remove('open');
       document.body.style.overflow = '';
-      currentRole = null;
       showToast('Deslogado com sucesso');
     }
 
@@ -2732,24 +2764,37 @@
     // --- RANKING ---
     async function loadRanking() {
       const res = await api('ranking.php');
-      const tbody = document.getElementById('rankingBody');
-      if (res.error || !res.ranking) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">Sem dados de ranking.</td></tr>'; return; }
+      const tbodies = [document.getElementById('rankingBody'), document.getElementById('publicRankingBody')].filter(Boolean);
+      
+      if (res.error || !res.ranking) { 
+        tbodies.forEach(b => b.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Sem dados de ranking.</td></tr>'); 
+        return; 
+      }
       const r = res.ranking;
-      if (r.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted)">Nenhum membro cadastrado.</td></tr>'; return; }
-      tbody.innerHTML = r.map((m, i) => {
+      if (r.length === 0) { 
+        tbodies.forEach(b => b.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted)">Nenhum membro cadastrado.</td></tr>'); 
+        return; 
+      }
+      
+      const html = r.map((m, i) => {
         const posClass = i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : '';
         const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : m.position;
-        const setClass = m.set.startsWith('BH') ? 'set-bh' : m.set.startsWith('RD') ? 'set-rd' : 'set-cele';
         return `<tr>
           <td><span class="rank-pos ${posClass}">${medal}</span></td>
           <td>${m.name}</td>
-          <td>${m.levelCele}<br><small style="color:var(--text-muted)">${m.levelSub > 0 ? m.levelSub : '-'}</small></td>
-          <td><span class="rank-set-badge ${setClass}">${m.set}</span></td>
+          <td>${m.levelCele}${m.levelSub > 0 ? '/' + m.levelSub : ''}</td>
           <td>${m.wars}</td>
           <td><span class="rank-score">${m.score}</span></td>
         </tr>`;
       }).join('');
+      
+      tbodies.forEach(b => b.innerHTML = html);
     }
+    
+    // Load ranking on startup
+    window.addEventListener('DOMContentLoaded', () => {
+      loadRanking();
+    });
 
     // --- ABSENCE ---
     async function loadMembersForSelect() {
