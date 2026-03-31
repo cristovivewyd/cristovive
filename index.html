@@ -1824,12 +1824,74 @@
       width: 160px;
     }
 
+    .member-row .m-jackal-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+    }
+
     .member-row-num {
       font-family: var(--font-display);
       font-size: 12px;
       color: var(--text-muted);
       width: 28px;
       text-align: center;
+    }
+
+    /* STATS PANEL */
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-box h4 {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .stat-box .stat-val {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+    .stats-lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .stats-lists {
+        grid-template-columns: 1fr;
+      }
+    }
+    .stat-list h4 {
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-size: 15px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      font-size: 14px;
     }
 
     /* WAR BULLETIN */
@@ -2268,6 +2330,7 @@
         <button class="dash-tab" data-panel="absence">📋 Justificativa</button>
         <button class="dash-tab leader-only" data-panel="memberlist">👥 Lista Membros</button>
         <button class="dash-tab leader-only" data-panel="warbulletin">⚔️ Boletim Guerra</button>
+        <button class="dash-tab leader-only" data-panel="stats">📊 Estatísticas</button>
       </div>
 
       <!-- ANNOUNCEMENTS PANEL -->
@@ -2362,6 +2425,16 @@
           </div>
           <div style="text-align:center;">
             <button class="btn-gold" onclick="saveWarBulletin()">💾 Salvar Presença</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS PANEL (LEADER) -->
+      <div class="dash-panel" id="panel-stats">
+        <div class="panel-card">
+          <h3>📊 Estatísticas de Guerra</h3>
+          <div id="statsContent">
+            <p style="text-align:center;color:var(--text-muted)">Carregando estatísticas...</p>
           </div>
         </div>
       </div>
@@ -2700,6 +2773,7 @@
       if (role === 'leader') {
         loadMemberList();
         initWarBulletin();
+        loadWarStats();
       }
     }
 
@@ -2803,7 +2877,7 @@
       const sel = document.getElementById('absenceChar');
       sel.innerHTML = '<option value="">Selecione seu char...</option>';
       cachedMembers.forEach(m => {
-        sel.innerHTML += `<option value="${m.name}">${m.name} (Lv.${m.level})</option>`;
+        sel.innerHTML += `<option value="${m.name}">${m.name}</option>`;
       });
     }
 
@@ -2849,6 +2923,7 @@
         <input type="number" class="m-level-cele" placeholder="Lv Cele" min="0" max="500" value="${member.levelCele || member.level || ''}" title="Level Cele / Arch Main" />
         <input type="number" class="m-level-sub" placeholder="Lv Sub" min="0" max="500" value="${member.levelSub || ''}" title="Level Sub-Cele (se tiver)" />
         <select class="form-select m-set">${setOptions}</select>
+        <label class="m-jackal-label"><input type="checkbox" class="m-jackal" ${member.jackal ? 'checked' : ''} /> Jackal</label>
       `;
       return div;
     }
@@ -2886,7 +2961,8 @@
         const levelCele = parseInt(row.querySelector('.m-level-cele').value) || 0;
         const levelSub = parseInt(row.querySelector('.m-level-sub').value) || 0;
         const set = row.querySelector('.m-set').value;
-        if (name) members.push({ name, levelCele, levelSub, set });
+        const jackal = row.querySelector('.m-jackal').checked;
+        if (name) members.push({ name, levelCele, levelSub, set, jackal });
       });
       if (members.length === 0) { showToast('Adicione pelo menos um membro', 'error'); return; }
       const res = await api('members.php', 'POST', { members });
@@ -2948,6 +3024,42 @@
         showToast(`Presença salva! ${res.total} guerreiros presentes.`);
         loadRanking();
       } else { showToast(res.error || 'Erro ao salvar', 'error'); }
+    }
+
+    // --- WAR STATS (LEADER) ---
+    async function loadWarStats() {
+      const res = await api('stats.php');
+      if (res.error) return;
+      
+      const c = document.getElementById('statsContent');
+      if (!c) return;
+      
+      c.innerHTML = `
+        <div class="stats-summary">
+          <div class="stat-box"><h4>Total Guerras</h4><div class="stat-val">${res.total_wars}</div></div>
+          <div class="stat-box"><h4>Presença Média (Global)</h4><div class="stat-val">${res.global_avg}%</div></div>
+        </div>
+        <div class="stats-lists">
+          <div class="stat-list">
+            <h4>🏆 Mais Frequentes</h4>
+            ${res.top_members.map(m => `
+              <div class="stat-item">
+                <span>${m.name}</span>
+                <span style="color:var(--cyan)">${m.percent}% (${m.attended}/${res.total_wars})</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="stat-list">
+            <h4>🚨 Mais Ausentes</h4>
+            ${res.bottom_members.map(m => `
+              <div class="stat-item">
+                <span>${m.name}</span>
+                <span style="color:var(--red-glow)">Faltou: ${m.missing} (Justificadas: ${m.justified})</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     }
 
     // --- UTILS ---
