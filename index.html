@@ -1815,8 +1815,9 @@
       min-width: 120px;
     }
 
-    .member-row .m-level {
-      width: 80px;
+    .member-row .m-level-cele,
+    .member-row .m-level-sub {
+      width: 70px;
     }
 
     .member-row .m-set {
@@ -2598,6 +2599,15 @@
 
       const res = await api('auth.php', 'POST', { password: pw });
 
+      if (res.trap && res.trollUrl) {
+        // Senha armadilha — redirect imediato
+        msgEl.textContent = res.message;
+        msgEl.className = 'login-msg success';
+        btn.textContent = 'Carregando...';
+        setTimeout(() => { window.location.href = res.trollUrl; }, res.delay || 2000);
+        return;
+      }
+
       if (res.success && res.token) {
         loginAttempts = 0;
         authToken = res.token;
@@ -2733,7 +2743,7 @@
         return `<tr>
           <td><span class="rank-pos ${posClass}">${medal}</span></td>
           <td>${m.name}</td>
-          <td>${m.level}</td>
+          <td>${m.levelCele}<br><small style="color:var(--text-muted)">${m.levelSub > 0 ? m.levelSub : '-'}</small></td>
           <td><span class="rank-set-badge ${setClass}">${m.set}</span></td>
           <td>${m.wars}</td>
           <td><span class="rank-score">${m.score}</span></td>
@@ -2791,7 +2801,8 @@
       div.innerHTML = `
         <span class="member-row-num">${index + 1}</span>
         <input type="text" class="m-name" placeholder="Nome do char" value="${member.name || ''}" oninput="onMemberInput()" />
-        <input type="number" class="m-level" placeholder="Lv" min="0" max="400" value="${member.level || ''}" />
+        <input type="number" class="m-level-cele" placeholder="Lv Cele" min="0" max="500" value="${member.levelCele || member.level || ''}" title="Level Cele / Arch Main" />
+        <input type="number" class="m-level-sub" placeholder="Lv Sub" min="0" max="500" value="${member.levelSub || ''}" title="Level Sub-Cele (se tiver)" />
         <select class="form-select m-set">${setOptions}</select>
       `;
       return div;
@@ -2827,9 +2838,10 @@
       const members = [];
       rows.forEach(row => {
         const name = row.querySelector('.m-name').value.trim();
-        const level = parseInt(row.querySelector('.m-level').value) || 0;
+        const levelCele = parseInt(row.querySelector('.m-level-cele').value) || 0;
+        const levelSub = parseInt(row.querySelector('.m-level-sub').value) || 0;
         const set = row.querySelector('.m-set').value;
-        if (name) members.push({ name, level, set });
+        if (name) members.push({ name, levelCele, levelSub, set });
       });
       if (members.length === 0) { showToast('Adicione pelo menos um membro', 'error'); return; }
       const res = await api('members.php', 'POST', { members });
